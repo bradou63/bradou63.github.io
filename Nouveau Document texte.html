@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Voice Command Listener</h2>
+    <button onclick="startRecognition()">🎤 Start Listening</button>
+    <p id="result"></p>
+
+    <script>
+      function startRecognition() {
+        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.onresult = function(event) {
+          document.getElementById("result").innerHTML = event.results[0][0].transcript;
+        };
+        recognition.start();
+      }
+    </script>
+  </body>
+</html>
