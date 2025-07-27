@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Voice Command</title>
+  </head>
   <body>
-    <h2>Voice Command Listener</h2>
+    <h2>Tap the Button and Speak</h2>
     <button onclick="startRecognition()">🎤 Start Listening</button>
-    <p id="result"></p>
+    <p id="result">Waiting for input...</p>
 
     <script>
       function startRecognition() {
-        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'en-US';
         recognition.onresult = function(event) {
-          document.getElementById("result").innerHTML = event.results[0][0].transcript;
+          const text = event.results[0][0].transcript;
+          document.getElementById("result").textContent = "Heard: " + text;
+          // Pass the recognized speech back to the app
+          if (window.AppInventor) {
+            window.AppInventor.setWebViewString(text);
+          }
         };
         recognition.start();
       }
